@@ -1,0 +1,83 @@
+body {
+  background-color: #F0FFFF;
+  display:flex;
+  justify-content:space-between;
+  flex-direction: column;
+  margin:0;
+  padding:0;
+  border:0;
+  margin-top:15px;
+}
+
+div {
+}
+
+button {
+  display:block;
+  margin-top:20px;
+}
+
+input[type="radio"] {
+  display:none; */
+}
+
+.wrapper {
+  display:flex;
+  flex-direction: column;
+  width:30%;
+}
+
+.pageblock {
+  display:flex;
+  justify-content:space-around;
+  flex-direction: row;
+  position:relative;
+  border-bottom: 10px solid white;
+  border-top:20px solid white;
+  margin-bottom: 15px;
+}
+
+.pb1 {
+  /*display: none; */
+}
+  
+.res {
+  background-color:white;
+  width:60%;
+  position:relative;
+}
+
+.select {
+  display:flex;
+  justify-content: space-between;
+  margin-top:15px;
+  border: 1px solid black;
+}
+
+.pageblock::before {
+  content:'Результат';
+  position:absolute;
+  top:-25px;
+  right:15px;
+  border-bottom: 1px solid black;
+}
+.pageblock::after {
+  content:'Ввод';
+  position:absolute;
+  top:-25px;
+  left:5px;
+  border-bottom: 1px solid black;
+}
+
+input[type="radio"] + label {
+  width:50%;
+  margin:0;
+}
+
+input[type="radio"]:checked + label {
+  background-color:green
+}
+
+
+
+
