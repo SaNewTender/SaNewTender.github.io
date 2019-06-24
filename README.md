@@ -1,5 +1,5 @@
 <html>
   <body>
-    <a href='page.html'>enter</a>
+    <a href='index.html'>enter</a>
   </body>
 </html>
