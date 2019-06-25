@@ -2,7 +2,7 @@
 <html>
 <head>
   <link href="style.css" rel="stylesheet">
-  <link rel="shortcut icon" href="favicon.png" type="image/png">
+   <link rel="shortcut icon" href="favicon.png" type="image/png">
   <meta charset="utf-8">  
   <meta name="viewport" content="width=device-width">
   <title>Расчет</title>
@@ -11,25 +11,38 @@
   <h2>Калькулятор суммы</h2>
   <div class='pageblock pb1'>
     <div class='wrapper'>
+      Cчитать ставку
+      <div class='select'>
+        <input id='bymonth' type="radio" name='daymonthselect' checked/>
+        <label for='bymonth'>
+          <span>По месяцам</span>
+        </label>        
+          
+        <input id='byday' type="radio" name='daymonthselect'/>
+        <label for='byday'>
+          <span>По дням</span>
+        </label>
+      </div>
+      <br>
       <label for="SD">
         Дата начала гарантии
       </label>
-      <input id='SD'>
+      <input id='SD' autocomplete=off>
     
-      <label for="ED">
+      <label for="ED" >
         Дата окончания гарантии
       </label>
-      <input id='ED'>
+      <input id='ED' autocomplete=off>
     
       <label for="GV">
         Размер обеспечения
       </label>
-      <input id='GV'>
+      <input id='GV' autocomplete=off>
     
       <label for="YR">
         Процентая ставка (годовых)
       </label>
-      <input id='YR'>
+      <input id='YR' autocomplete=off>
     
     <button id='pb1button'>Рассчитать</button>
     </div>
@@ -46,7 +59,7 @@
         <label for='calcstart'>
           Дата начала отсчета
         </label>
-        <input id='calcstart'>
+        <input id='calcstart' autocomplete=off>
         
         <div class='select'>
           <input id='diff' type="radio" name='radioselect' checked/>
@@ -63,7 +76,7 @@
         <label for='calcdiff' id='difflabel'>
           Ввести конечную дату для расчета разницы
         </label>
-        <input id='calcdiff' placeholder='дата формата дд.мм.гггг, пример 22.10.2022'>
+        <input id='calcdiff' placeholder='дата формата дд.мм.гггг, пример 22.10.2022' autocomplete=off>
         
         <button id='pb2button'>Рассчитать</button>
         

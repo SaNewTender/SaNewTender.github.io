@@ -18,7 +18,15 @@ button {
 }
 
 input[type="radio"] {
-  display:none; */
+  display:none;
+}
+
+h2 {
+  margin-bottom:0.3em;
+}
+
+hr {
+  color:black;
 }
 
 .wrapper {
@@ -34,7 +42,6 @@ input[type="radio"] {
   position:relative;
   border-bottom: 10px solid white;
   border-top:20px solid white;
-  margin-bottom: 15px;
 }
 
 .pb1 {
@@ -45,13 +52,18 @@ input[type="radio"] {
   background-color:white;
   width:60%;
   position:relative;
+  border:1px solid #F0FFFF;
 }
 
 .select {
   display:flex;
   justify-content: space-between;
   margin-top:15px;
-  border: 1px solid black;
+  border: 1px solid lightgrey;
+}
+
+.pb1 .select {
+  margin-top:0;
 }
 
 .pageblock::before {
@@ -72,6 +84,7 @@ input[type="radio"] {
 input[type="radio"] + label {
   width:50%;
   margin:0;
+  background-color: white;
 }
 
 input[type="radio"]:checked + label {

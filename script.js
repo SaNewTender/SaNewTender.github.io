@@ -18,27 +18,6 @@ const normalize = (x) => x.replace(/\s+/g, '').replace(/[,-/]/g, ".")
 // Функция создания массива из даты
 const dateArr = (date) => date.split(".").map(el => Number(el));
 
-//Функция рассчета и вывода стоимости гарантии
-const price = (startDate, endDate, garValue, yearRate) => {
-  const SDarr = dateArr(startDate);
-  const EDarr = dateArr(endDate);
-  const monthDiff = (EDarr[2] - SDarr[2]) * 12 + EDarr[1] - SDarr[1] + 1;
-  const res = Math.floor(monthDiff / 12 * yearRate / 100 * Number(garValue));
-  return `${res.toLocaleString()} руб.`
-}
-
-//Функция преобразования даты в формат, подходящий для вывода
-const outDate = (d) => {
-  const monthArr = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
-  const arr = dateArr(d);
-  return `${arr[0]} ${monthArr[arr[1] - 1]} ${arr[2]} года`;
-}
-
-//Функция преобразования размера обеспечения в формат, подходящий для вывода
-const outGarValue = (val) => {
-  return `${Number(val).toLocaleString()} руб.`;
-}
-
 // Ф-ции калькулятора дней
 const diff = (date1, date2) => {
   const d1arr = dateArr(date1);
@@ -56,6 +35,37 @@ const sum = (date, val) => {
   const mm = String(d.getMonth() + 1).padStart(2, '0'); //January is 0!
   const yyyy = d.getFullYear();
   return `${dd}.${mm}.${yyyy}`;
+}
+
+// Определение используемой процентной ставки (считаем по дням или месяцам)
+const rate = (startDate, endDate, yearRate, choice) => {
+  const SDarr = dateArr(startDate);
+  const EDarr = dateArr(endDate);
+  const monthDiff = (EDarr[2] - SDarr[2]) * 12 + EDarr[1] - SDarr[1] + 1;
+  const dayDiff = Number(diff(startDate, endDate));
+  return choice ? monthDiff / 12 * yearRate : dayDiff / 365 * yearRate;
+}
+
+//console.log(rate('25.06.2019', '31.01.2020', '2', false));
+
+//Функция рассчета и вывода стоимости гарантии
+const price = (garValue, usedRate) => {
+  const res = Math.floor(usedRate / 100 * Number(garValue));
+  return `${res.toLocaleString()} руб.`
+}
+
+//console.log(price('12345005.56', rate('25.06.2019', '31.01.2020', '2', true)))
+
+//Функция преобразования даты в формат, подходящий для вывода
+const outDate = (d) => {
+  const monthArr = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
+  const arr = dateArr(d);
+  return `${arr[0]} ${monthArr[arr[1] - 1]} ${arr[2]} года`;
+}
+
+//Функция преобразования размера обеспечения в формат, подходящий для вывода
+const outGarValue = (val) => {
+  return `${Number(val).toLocaleString()} руб.`;
 }
 
 
@@ -79,6 +89,9 @@ $(document).ready(function() {
   let YR = $('#YR').val();
   let nYR = normalize(YR);
   
+  let choice = $('#bymonth').prop('checked');
+  
+  let nRate = rate(nSD, nED, nYR, choice);
 //  let res = price(nSD, nED, nGV, nYR)
 // Формирование результата  
   let output = `При сумме гарантии в
@@ -86,7 +99,7 @@ $(document).ready(function() {
     и сроке действия гарантии до 
     <span style='background-color:#00ff00'>${outDate(nED)}</span>
     стоимость составит 
-    <span style='background-color:#00ff00'>${price(nSD, nED, nGV, nYR)}</span>`
+    <span style='background-color:#00ff00'>${price(nRate, nGV)}</span>`
 // Окончательный вывод
   $('#output').html(output);
    });
@@ -116,4 +129,7 @@ $(document).ready(function() {
   })
 
 })
+
+
+
 
