@@ -37,11 +37,15 @@ const sum = (date, val) => {
   return `${dd}.${mm}.${yyyy}`;
 }
 
+const monDiff = (startDay, endDay) => {
+  const SDarr = dateArr(startDay);
+  const EDarr = dateArr(endDay);
+  return (EDarr[2] - SDarr[2]) * 12 + EDarr[1] - SDarr[1] + 1;
+}
+
 // Определение используемой процентной ставки (считаем по дням или месяцам)
 const rate = (startDate, endDate, yearRate, choice) => {
-  const SDarr = dateArr(startDate);
-  const EDarr = dateArr(endDate);
-  const monthDiff = (EDarr[2] - SDarr[2]) * 12 + EDarr[1] - SDarr[1] + 1;
+  const monthDiff = monDiff(startDate, endDate);
   const dayDiff = Number(diff(startDate, endDate));
   return choice ? monthDiff / 12 * yearRate : dayDiff / 365 * yearRate;
 }
@@ -68,6 +72,21 @@ const outGarValue = (val) => {
   return `${Number(val).toLocaleString()} руб.`;
 }
 
+const Calculate = function (startDate, endDate, garVal, yearRate, dayMonth) {
+  this.ogv = outGarValue(garVal);
+  this.od = outDate(endDate);
+  this.absrate = rate(startDate, endDate, yearRate, dayMonth);
+  this.finprice = price(this.absrate, garVal);
+  this.validity = dayMonth ? `${monDiff(startDate, endDate)}` 
+                  : `${diff(startDate, endDate)}`;
+  this.outabsrate = `${Math.round(this.absrate * 100)/100} %`;
+  this.uom = dayMonth ? 'месяцах' : 'днях';
+}
+
+const test = new Calculate('27.06.2019', '31.01.2020', '12365789.55', '2', false)
+
+console.log(test);
+
 
 $(document).ready(function() {
 // автоматическое заполнение форм "дата начала" и "годовой процент" самыми распространенными значениями
@@ -91,15 +110,17 @@ $(document).ready(function() {
   
   let choice = $('#bymonth').prop('checked');
   
-  let nRate = rate(nSD, nED, nYR, choice);
+  let res = new Calculate(nSD, nED, nGV, nYR, choice);
 //  let res = price(nSD, nED, nGV, nYR)
 // Формирование результата  
   let output = `При сумме гарантии в
-    <span style='background-color:#00ff00'>${outGarValue(nGV)}</span>
+    <span style='background-color:#00ff00'>${res.ogv}</span>
     и сроке действия гарантии до 
-    <span style='background-color:#00ff00'>${outDate(nED)}</span>
+    <span style='background-color:#00ff00'>${res.od}</span>
     стоимость составит 
-    <span style='background-color:#00ff00'>${price(nRate, nGV)}</span>`
+    <span style='background-color:#00ff00'>${res.finprice}</span>
+    <br><br>Срок гарантии в ${res.uom} - ${res.validity}
+    <br><br>Проценьная ставка от суммы - ${res.outabsrate}`
 // Окончательный вывод
   $('#output').html(output);
    });
