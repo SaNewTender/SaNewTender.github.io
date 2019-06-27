@@ -82,11 +82,18 @@ const Calculate = function (startDate, endDate, garVal, yearRate, dayMonth) {
   this.outabsrate = `${Math.round(this.absrate * 100)/100} %`;
   this.uom = dayMonth ? 'месяцах' : 'днях';
 }
+//console.log(new Calculate('27.06.2019', '31.01.2020', '12365789.55', '2', false));
 
-const test = new Calculate('27.06.2019', '31.01.2020', '12365789.55', '2', false)
+const Check = function (sDate, eDate, gVal, price) {
+  this.absrate = Math.round(Number(price) / Number(gVal) * 10000) / 100;
+  this.dayVal = diff(sDate, eDate);
+  this.monVal = monDiff(sDate, eDate);
+  this.YearRateByMonth = Math.ceil(this.absrate / this.monVal * 12 * 100) / 100; 
+  this.YearRateByDay = Math.ceil(this.absrate / this.dayVal * 365 * 100) / 100; 
 
-console.log(test);
+}
 
+//console.log(new Check('27.06.2019','31.01.2020','10576879.46', '126342'))
 
 $(document).ready(function() {
 // автоматическое заполнение форм "дата начала" и "годовой процент" самыми распространенными значениями
@@ -111,6 +118,7 @@ $(document).ready(function() {
   let choice = $('#bymonth').prop('checked');
   
   let res = new Calculate(nSD, nED, nGV, nYR, choice);
+  console.log(res);
 //  let res = price(nSD, nED, nGV, nYR)
 // Формирование результата  
   let output = `При сумме гарантии в
@@ -147,6 +155,31 @@ $(document).ready(function() {
     let check = $('#diff').prop('checked');
     let x = check ? diff(nf1, nf2) : sum(nf1, f2);
     $('#calcout').html(x);
+  })
+  
+  $('#pb3button').click(function () {
+    let CSD = $('#CSD').val();
+    let nCSD = normalize(CSD);
+    
+    let CED = $('#CED').val();
+    let nCED = normalize(CED);
+    
+    let CGV = $('#CGV').val();
+    let nCGV = normalize(CGV);
+    
+    let CP = $('#CP').val();
+    let nCP = normalize(CP);
+    
+    let respb3 = new Check(nCSD, nCED, nCGV, nCP);
+
+    let out = `Процент от суммы - ${respb3.absrate}<br><hr><br>
+               Длительность гарантии в днях - ${respb3.dayVal}<br>
+               Годовая ставка в рассчете по дням - ${respb3.YearRateByDay}<br><hr><br>
+               Длительность гарантии в месяцах - ${respb3.monVal}<br>
+               Годовая ставка в рассчете по месяцам - ${respb3.YearRateByMonth}<br><hr><br>
+               `
+    console.log(respb3);
+    $('#checkout').html(out);
   })
 
 })

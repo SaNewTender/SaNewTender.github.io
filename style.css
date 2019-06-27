@@ -44,10 +44,16 @@ hr {
   border-top:20px solid white;
 }
 
-.pb1 {
-  /*display: none; */
+/*
+.pb3 {
+  display: none; 
 }
-  
+
+.pb2 {
+  display:none;
+}
+*/
+
 .res {
   background-color:white;
   width:60%;
