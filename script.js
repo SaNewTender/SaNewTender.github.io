@@ -120,7 +120,7 @@ $(document).ready(function() {
     стоимость составит 
     <span style='background-color:#00ff00'>${res.finprice}</span>
     <br><br>Срок гарантии в ${res.uom} - ${res.validity}
-    <br><br>Проценьная ставка от суммы - ${res.outabsrate}`
+    <br><br>Процентная ставка от суммы - ${res.outabsrate}`
 // Окончательный вывод
   $('#output').html(output);
    });
