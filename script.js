@@ -70,7 +70,7 @@ const outDate = (d) => {
 //Функция преобразования размера обеспечения в формат, подходящий для вывода
 const outGarValue = (val) => {
   return `${Number(val).toLocaleString()} руб.`;
-}
+};
 
 const Calculate = function (startDate, endDate, garVal, yearRate, dayMonth) {
   this.ogv = outGarValue(garVal);
@@ -95,6 +95,7 @@ const Check = function (sDate, eDate, gVal, price) {
 
 //console.log(new Check('27.06.2019','31.01.2020','10576879.46', '126342'))
 
+
 $(document).ready(function() {
 // автоматическое заполнение форм "дата начала" и "годовой процент" самыми распространенными значениями
   $('#SD').val(today());
@@ -114,12 +115,17 @@ $(document).ready(function() {
      
   let YR = $('#YR').val();
   let nYR = normalize(YR);
+
+  if (!(SD && ED && GV && YR)) {
+    alert(' Необходимо заполнить все поля в форме "Калькулятор суммы" ');
+    $('#output').prepend("<br><span style='background-color:black; color:white'>НЕВЕРНЫЕ ДАННЫЕ</span><br>");
+    return;
+  }
   
   let choice = $('#bymonth').prop('checked');
   
   let res = new Calculate(nSD, nED, nGV, nYR, choice);
   console.log(res);
-//  let res = price(nSD, nED, nGV, nYR)
 // Формирование результата  
   let output = `При сумме гарантии в
     <span style='background-color:#00ff00'>${res.ogv}</span>
@@ -129,11 +135,11 @@ $(document).ready(function() {
     <span style='background-color:#00ff00'>${res.finprice}</span>
     <br><br>Срок гарантии в ${res.uom} - ${res.validity}
     <br><br>Процентная ставка от суммы - ${res.outabsrate}`
-// Окончательный вывод
+//Вывод
   $('#output').html(output);
    });
 
-//Калькулятор дней
+//Калькулятор срока
   $('#diff').click(function () {
     $('#difflabel').text('Ввести конечную дату для расчета разницы');
     $('#calcdiff').val('');
@@ -152,11 +158,20 @@ $(document).ready(function() {
     let f2 = $('#calcdiff').val();
     let nf2 = normalize(f2);
 
+    if (!(f1 && f2)) {
+      alert(' Необходимо заполнить все поля в форме "Калькулятор срока"');
+      
+      $('#calcout').prepend("<br><span style='background-color:black; color:white'>НЕВЕРНЫЕ ДАННЫЕ</span><br>")
+      return
+    }
+
     let check = $('#diff').prop('checked');
     let x = check ? diff(nf1, nf2) : sum(nf1, f2);
-    $('#calcout').html(x);
+//Вывод
+      $('#calcout').html(x);
   })
   
+//Анализ счета
   $('#pb3button').click(function () {
     let CSD = $('#CSD').val();
     let nCSD = normalize(CSD);
@@ -170,8 +185,14 @@ $(document).ready(function() {
     let CP = $('#CP').val();
     let nCP = normalize(CP);
     
-    let respb3 = new Check(nCSD, nCED, nCGV, nCP);
+    if (!(CSD && CED && CGV && CP)) {
+      alert(' Необходимо заполнить все поля в форме "Анализ счета"');
+      $('#checkout').prepend("<br><span style='background-color:black; color:white'>НЕВЕРНЫЕ ДАННЫЕ</span><br>");
+      return;
+    };
 
+    let respb3 = new Check(nCSD, nCED, nCGV, nCP);
+//Формирование результата
     let out = `Процент от суммы - ${respb3.absrate}<br><hr><br>
                Длительность гарантии в днях - ${respb3.dayVal}<br>
                Годовая ставка в рассчете по дням - ${respb3.YearRateByDay}<br><hr><br>
@@ -179,6 +200,7 @@ $(document).ready(function() {
                Годовая ставка в рассчете по месяцам - ${respb3.YearRateByMonth}<br><hr><br>
                `
     console.log(respb3);
+//Вывод
     $('#checkout').html(out);
   })
 
