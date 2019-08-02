@@ -94,7 +94,8 @@ input[type="radio"] + label {
 }
 
 input[type="radio"]:checked + label {
-  background-color:green
+  background-color:#1a1aff;
+  color:white;
 }
 
 

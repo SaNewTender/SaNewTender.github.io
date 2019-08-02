@@ -128,11 +128,11 @@ $(document).ready(function() {
   console.log(res);
 // Формирование результата  
   let output = `При сумме гарантии в
-    <span style='background-color:#00ff00'>${res.ogv}</span>
+    <span style='background-color:#1a1aff; color:white'>${res.ogv}</span>
     и сроке действия гарантии до 
-    <span style='background-color:#00ff00'>${res.od}</span>
+    <span style='background-color:#1a1aff; color:white'>${res.od}</span>
     стоимость составит 
-    <span style='background-color:#00ff00'>${res.finprice}</span>
+    <span style='background-color:#1a1aff; color:white'>${res.finprice}</span>
     <br><br>Срок гарантии в ${res.uom} - ${res.validity}
     <br><br>Процентная ставка от суммы - ${res.outabsrate}`
 //Вывод
