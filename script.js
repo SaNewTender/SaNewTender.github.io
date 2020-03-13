@@ -72,7 +72,7 @@ const outGarValue = (val) => {
   return `${Number(val).toLocaleString()} руб.`;
 };
 
-const Calculate = function (startDate, endDate, garVal, yearRate, dayMonth) {
+const Calculate = function (startDate, endDate, garVal, yearRate, dayMonth, ConID) {
   this.ogv = outGarValue(garVal);
   this.od = outDate(endDate);
   this.absrate = rate(startDate, endDate, yearRate, dayMonth);
@@ -81,6 +81,7 @@ const Calculate = function (startDate, endDate, garVal, yearRate, dayMonth) {
                   : `${diff(startDate, endDate)}`;
   this.outabsrate = `${Math.round(this.absrate * 100)/100} %`;
   this.uom = dayMonth ? 'месяцах' : 'днях';
+  this.ConID = ConID;
 }
 //console.log(new Calculate('27.06.2019', '31.01.2020', '12365789.55', '2', false));
 
@@ -104,6 +105,8 @@ $(document).ready(function() {
   
    $('#pb1button').click(function() {
 // получение значений из форм
+  let CID = $('#CID').val();
+
   let SD = $('#SD').val();
   let nSD = normalize(SD);
      
@@ -124,7 +127,7 @@ $(document).ready(function() {
   
   let choice = $('#bymonth').prop('checked');
   
-  let res = new Calculate(nSD, nED, nGV, nYR, choice);
+  let res = new Calculate(nSD, nED, nGV, nYR, choice, CID);
   console.log(res);
 // Формирование результата  
   let output = `При сумме гарантии в
@@ -133,6 +136,9 @@ $(document).ready(function() {
     <span style='background-color:#1a1aff; color:white'>${res.od}</span>
     стоимость составит 
     <span style='background-color:#1a1aff; color:white'>${res.finprice}</span>
+    (Информация указана для контракта с реестровым номером
+    <span style='text-decoration: underline'>${res.ConID}</span>
+    )
     <br><br>Срок гарантии в ${res.uom} - ${res.validity}
     <br><br>Процентная ставка от суммы - ${res.outabsrate}`
 //Вывод
