@@ -82,6 +82,8 @@ const Calculate = function (startDate, endDate, garVal, yearRate, dayMonth, ConI
   this.outabsrate = `${Math.round(this.absrate * 100)/100} %`;
   this.uom = dayMonth ? 'месяцах' : 'днях';
   this.ConID = ConID;
+  this.sd = outDate(startDate);
+  this.yearRate = yearRate;
 }
 //console.log(new Calculate('27.06.2019', '31.01.2020', '12365789.55', '2', false));
 
@@ -143,6 +145,13 @@ $(document).ready(function() {
     <br><br>Процентная ставка от суммы - ${res.outabsrate}`
 //Вывод
   $('#output').html(output);
+//Приведение полей в исходное     
+  $('#GV').val('');
+  $('#CID').val('');
+  $('#ED').val('');
+  $('#SD').val(today());
+  $('#YR').val('2');
+
    });
 
 //Калькулятор срока
