@@ -42,7 +42,9 @@ hr {
   position:relative;
   border-bottom: 10px solid white;
   border-top:20px solid white;
+  height:480px;
 }
+
 
 /*
 .pb3 {
@@ -60,6 +62,18 @@ hr {
   position:relative;
   border:1px solid #F0FFFF;
 }
+
+.pb1out {
+  display:flex;
+  flex-direction:column;
+  justify-content: space-between;
+}
+
+#story {
+  overflow:auto;
+  height:65%;
+}
+
 
 .select {
   display:flex;

@@ -104,6 +104,7 @@ $(document).ready(function() {
   $('#SD').val(today());
   $('#YR').val('2');
   $('#calcstart').val(today());
+  $('#story').append(today())
   
    $('#pb1button').click(function() {
 // получение значений из форм
@@ -143,8 +144,20 @@ $(document).ready(function() {
     )
     <br><br>Срок гарантии в ${res.uom} - ${res.validity}
     <br><br>Процентная ставка от суммы - ${res.outabsrate}`
+
+  let story = `<p>
+    ======
+    <br>По закупке с реестровым номером ${res.ConID}:
+    <br>Размер обеспечения: ${res.ogv}
+    <br>Срок гарантии в ${res.uom}: ${res.validity} (с ${res.sd} по ${res.od}) 
+    <br>Процентные ставки: ${res.yearRate}% годовых или ${res.outabsrate} от суммы
+    <br>Стоимость: ${res.finprice}
+    <br>======
+    </p>`
+  
 //Вывод
   $('#output').html(output);
+  $('#story').append(story)
 //Приведение полей в исходное     
   $('#GV').val('');
   $('#CID').val('');
