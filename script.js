@@ -104,7 +104,7 @@ $(document).ready(function() {
   $('#SD').val(today());
   $('#YR').val('2');
   $('#calcstart').val(today());
-  $('#story').append(today())
+  $('#story').append(today());
   
    $('#pb1button').click(function() {
 // получение значений из форм
@@ -152,6 +152,7 @@ $(document).ready(function() {
     <br>Срок гарантии в ${res.uom}: ${res.validity} (с ${res.sd} по ${res.od}) 
     <br>Процентные ставки: ${res.yearRate}% годовых или ${res.outabsrate} от суммы
     <br>Стоимость: ${res.finprice}
+    <br>Комментарий: <input value='-' style='border:none'>
     <br>======
     </p>`
   
@@ -164,6 +165,7 @@ $(document).ready(function() {
   $('#ED').val('');
   $('#SD').val(today());
   $('#YR').val('2');
+  $('#COM').val('-');
 
    });
 
